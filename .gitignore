@@ -1,0 +1,16 @@
+# Ignorar configuración del IDE
+.idea/
+
+# Ignorar datos y modelos grandes
+Dataset/
+runs/
+
+# Ignorar archivos generados
+__pycache__/
+*.pyc
+*.pyo
+
+# Otros archivos temporales o de sistema
+*.log
+*.tmp
+.DS_Store
