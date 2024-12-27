@@ -32,7 +32,7 @@ uniqueNames = list(set(uniqueNames))
 # Shuffle
 random.shuffle(uniqueNames)
 
-# Fin the number of images for each folder
+# Find the number of images for each folder
 lenData = len(uniqueNames)
 lenTrain = int(lenData * splitRatio["train"])
 lenVal = int(lenData * splitRatio["val"])
@@ -61,7 +61,9 @@ for i, out in enumerate(Output):
 print("Split Process Completed...")
 
 # Creating DataOffline.yaml file
-dataYaml = (f'path: /home/reyserlyn/AntiSpoofing/Dataset/SplitData\n\
+absolute_path = os.path.abspath(outputFolderPath)
+
+dataYaml = (f'path: {absolute_path}\n\
 train: train/images\n\
 val: val/images\n\
 test: test/images\n\
