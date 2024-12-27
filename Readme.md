@@ -27,7 +27,7 @@ Este proyecto requiere un entorno virtual en Python. Asegúrate de tener **Pytho
    - **En Windows**:
 
      ```bash
-     python -m venv venv
+     python3 -m venv venv
      .\venv\Scripts\activate
      ```
 
@@ -69,15 +69,7 @@ New-Item -Path "Dataset\SplitData\val\labels" -ItemType Directory
 ```
 
 ## Uso
-
-1. **Entrenamiento del modelo**:
-   Después de configurar las carpetas y descargar el conjunto de datos, puedes comenzar a entrenar el modelo ejecutando el siguiente script:
-
-   ```bash
-   python train.py
-   ```
-
-2. **Ejecutar detección**:
+1. **Ejecutar detección**:
    Para realizar predicciones utilizando el modelo entrenado, ejecuta:
 
    ```bash
