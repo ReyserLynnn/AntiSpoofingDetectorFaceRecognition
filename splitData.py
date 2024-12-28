@@ -4,10 +4,10 @@ import shutil
 from itertools import islice
 
 # Directorios de entrada y salida
-outputFolderPath = "Dataset/SplitData"  # Carpeta donde se guardarán los datos divididos
-inputFolderPath = "Dataset/all"  # Carpeta con las imágenes originales
+outputFolderPath = "Dataset/SplitData"  # Carpeta donde se guardaran los datos divididos
+inputFolderPath = "Dataset/all"  # Carpeta con las imagenes originales
 
-# Proporción para dividir los datos en entrenamiento, validación y prueba. Clases validas
+# Proporcion para dividir los datos en entrenamiento, validacion y prueba. Clases validas
 splitRatio = {"train": 0.7, "val": 0.2, "test": 0.1}
 classes = ["fake", "real"]
 
@@ -25,23 +25,23 @@ os.makedirs(f"{outputFolderPath}/val/labels", exist_ok=True)
 os.makedirs(f"{outputFolderPath}/test/images", exist_ok=True)
 os.makedirs(f"{outputFolderPath}/test/labels", exist_ok=True)
 
-# Obtener los nombres de las imágenes en la carpeta de entrada
+# Obtener los nombres de las imagenes en la carpeta de entrada
 listNames = os.listdir(inputFolderPath)
 
-# Extraer los nombres de archivo sin extensión
+# Extraer los nombres de archivo sin extension
 uniqueNames = [name.split(".")[0] for name in listNames]
 uniqueNames = list(set(uniqueNames))  # Eliminar nombres duplicados
 
-# Barajar los nombres para aleatorizar la división
+# Barajar los nombres para aleatorizar la division
 random.shuffle(uniqueNames)
 
-# Calcular la cantidad de imágenes para cada conjunto (train, val, test)
+# Calcular la cantidad de imagenes para cada conjunto (train, val, test)
 lenData = len(uniqueNames)
 lenTrain = int(lenData * splitRatio["train"])
 lenVal = int(lenData * splitRatio["val"])
 lenTest = int(lenData * splitRatio["test"])
 
-# Ajustar el número de imágenes de entrenamiento si la suma no coincide
+# Ajustar el numero de imagenes de entrenamiento si la suma no coincide
 if lenData != lenTrain + lenVal + lenTest:
     remainingData = lenData - (lenTrain + lenVal + lenTest)
     lenTrain += remainingData
@@ -51,10 +51,10 @@ lengthToSplit = [lenTrain, lenVal, lenTest]
 Input = iter(uniqueNames)
 Output = [list(islice(Input, elem)) for elem in lengthToSplit]
 
-# Imprimir la cantidad de imágenes por conjunto
+# Imprimir la cantidad de imagenes por conjunto
 print(f"Total Images: {lenData} \nSplit:{len(Output[0])} {len(Output[1])} {len(Output[2])}")
 
-# Copiar las imágenes y etiquetas a las subcarpetas correspondientes
+# Copiar las imagenes y etiquetas a las subcarpetas correspondientes
 sequence = ['train', 'val', 'test']
 
 for i, out in enumerate(Output):
@@ -64,7 +64,7 @@ for i, out in enumerate(Output):
 
 print("Split Process Completed...")
 
-# Crear el archivo DataOffline.yaml con la configuración del dataset
+# Crear el archivo DataOffline.yaml con la configuracion del dataset
 absolute_path = os.path.abspath(outputFolderPath)
 
 dataYaml = (f'path: {absolute_path}\n\

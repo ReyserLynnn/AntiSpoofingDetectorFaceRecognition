@@ -3,43 +3,43 @@ from cvzone.FaceDetectionModule import FaceDetector
 import cv2
 from time import time
 
-# -----------------------------
-# Configuración general
+# -----------------------------S
+# Configuracion general
 # -----------------------------
 classID = 0  # 0 es "fake", 1 es "real".
 outputFolderPath = 'Dataset/DataCollect'
-confidence = 0.8  # Umbral mínimo de confianza para detecciones válidas.
+confidence = 0.8  # Umbral minimo de confianza para detecciones validas.
 save = True  # Habilitar o deshabilitar el guardado de datos.
-debug = False  # Mostrar información adicional para depuración.
-blurThreshold = 35  # Umbral para determinar si una imagen está desenfocada (valores mayores son más enfocados).
+debug = False  # Mostrar informacion adicional para depuracion.
+blurThreshold = 35  # Umbral para determinar si una imagen esta desenfocada (valores mayores son mas enfocados).
 
 offsetPercentW = 10  # Porcentaje de desplazamiento horizontal en las detecciones.
 offsetPercentH = 20  # Porcentaje de desplazamiento vertical en las detecciones.
-camWidth, camHeight = 640, 480  # Resolución de la cámara.
+camWidth, camHeight = 640, 480  # Resolucion de la camara.
 floatingPoint = 6  # Cantidad de decimales para normalizar coordenadas.
 
 # -----------------------------
-# Inicialización de la cámara y el detector
+# Inicializacion de la camara y el detector
 # -----------------------------
 cap = cv2.VideoCapture(0)
 cap.set(3, camWidth)
 cap.set(4, camHeight)
 
-# Inicialización del detector de rostros.
+# Inicializacion del detector de rostros.
 detector = FaceDetector(minDetectionCon=0.5, modelSelection=0)
 
 # -----------------------------
 # Bucle principal
 # -----------------------------
 while True:
-    # Capturar un frame desde la cámara.
+    # Capturar un frame desde la camara.
     success, img = cap.read()
     imgOut = img.copy()
 
     # Detectar rostros en el frame.
     img, bboxs = detector.findFaces(img, draw=False)
 
-    # Listas para almacenar información sobre desenfoque y etiquetas.
+    # Listas para almacenar informacion sobre desenfoque y etiquetas.
     listBlur = []
     listInfo = []
 
@@ -47,7 +47,7 @@ while True:
         # bboxInfo - "id","bbox","score","center"
         for bbox in bboxs:
             x, y, w, h = bbox['bbox']
-            score = float(bbox['score'][0])  # Confianza de la detección.
+            score = float(bbox['score'][0])  # Confianza de la deteccion.
 
             # Verificar si la confianza supera el umbral.
             if score > confidence:
@@ -61,7 +61,7 @@ while True:
                 # Evitar valores negativos en las coordenadas.
                 x, y, w, h = max(x, 0), max(y, 0), max(w, 0), max(h, 0)
 
-                # Calcular el desenfoque de la región detectada.
+                # Calcular el desenfoque de la region detectada.
                 imgFace = img[y:y + h, x:x + w]
                 cv2.imshow('imgFace', imgFace)
                 blurValue = int(cv2.Laplacian(imgFace, cv2.CV_64F).var())
@@ -82,10 +82,10 @@ while True:
                 # Limitar los valores normalizados a 1.
                 xcn, ycn, wn, hn = min(xcn, 1), min(ycn, 1), min(wn, 1), min(hn, 1)
 
-                # Agregar información normalizada a la lista.
+                # Agregar informacion normalizada a la lista.
                 listInfo.append(f"{classID} {xcn} {ycn} {wn} {hn}\n")
 
-                # Dibujar la caja y mostrar la información en la imagen.
+                # Dibujar la caja y mostrar la informacion en la imagen.
                 cvzone.cornerRect(imgOut, (x, y, w, h), 25, 8, 3, (255, 0, 0))
                 cvzone.putTextRect(imgOut, f'Score: {int(score * 100)}% Blur: {blurValue}', (x, y - 10), scale=1.5,
                                    thickness=2)
@@ -95,7 +95,7 @@ while True:
                     cvzone.putTextRect(img, f'Score: {int(score * 100)}% Blur: {blurValue}', (x, y - 10), scale=1.5,
                                        thickness=2)
 
-        # Guardar los datos si todas las detecciones son válidas.
+        # Guardar los datos si todas las detecciones son validas.
         if save:
             if all(listBlur) and listBlur != []:
                 # Save image

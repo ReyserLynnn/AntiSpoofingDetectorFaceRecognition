@@ -5,16 +5,16 @@ import cv2
 import cvzone
 from ultralytics import YOLO
 
-# Nivel mínimo de confianza para considerar una detección válida.
+# Nivel minimo de confianza para considerar una deteccion valida.
 confidence = 0.6
 
-# Inicialización de la cámara.
+# Inicializacion de la camara.
 cap = cv2.VideoCapture(0)
 cap.set(3, 640)
 cap.set(4, 480)
 
 # Cargar el modelo YOLO con el archivo entrenado.
-model = YOLO("models/n_version_8_2.pt")
+model = YOLO("models/version_3_300.pt")
 
 # Nombres de las clases que el modelo puede detectar.
 classNames = ["fake", "real"]
@@ -41,13 +41,13 @@ while True:
             # Calcular el ancho y alto de la caja delimitadora.
             w, h = x2 - x1, y2 - y1
 
-            # Obtener el nivel de confianza de la detección.
+            # Obtener el nivel de confianza de la deteccion.
             conf = math.ceil((box.conf[0] * 100)) / 100
 
             # Obtener la clase detectada.
             cls = int(box.cls[0])
 
-            # Validar si la detección cumple con el nivel mínimo de confianza.
+            # Validar si la deteccion cumple con el nivel minimo de confianza.
             if conf > confidence:
                 if classNames[cls] == 'real':
                     color = (0, 255, 0)  # Verde para "real".
