@@ -2,7 +2,7 @@ import cvzone
 from cvzone.FaceDetectionModule import FaceDetector
 import cv2
 
-cap = cv2.VideoCapture(0)
+cap = cv2.VideoCapture(1)
 
 # Initialize the FaceDetector object
 # minDetectionCon: Minimum detection confidence threshold
